@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import CategoryDDLComponent from "../components/category-ddl.component";
-import graphComponent from "../components/graph.component";
+import CategoryDDLComponent from "../components/category-ddl/category-ddl.component";
+import graphComponent from "../components/graph/graph.component";
 
 export default {
   name: "graphPage",
