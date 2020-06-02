@@ -71,6 +71,7 @@
         animation-fill-mode: forwards;
         animation-timing-function: step-start;
         box-shadow: 0 0px 3px #ccc;
+        z-index: 2;
     }
 
     &__option {

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <CategoryDDLComponent></CategoryDDLComponent>
-    <graphComponent></graphComponent>
+    <CategoryDDLComponent @onCategorySelection="collectSelectedDetails"></CategoryDDLComponent>
+    <graphComponent :graphData="selectedDetails"></graphComponent>
   </div>
 </template>
 
@@ -18,7 +18,15 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      selectedDetails: {}
+    };
+  },
+
+  methods: {
+    collectSelectedDetails(payload) {
+      this.selectedDetails = payload;
+    }
   }
 };
 </script>

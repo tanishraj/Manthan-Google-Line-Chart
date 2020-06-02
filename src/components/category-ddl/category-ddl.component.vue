@@ -9,6 +9,7 @@
             id="0"
             :value="''"
             name="option"
+            title="Select option"
             checked="checked"
             @change="customMethod"
           />
@@ -19,19 +20,21 @@
             class="select-box__input"
             type="radio"
             id="1"
-            :value="'clickThruRates'"
+            :value="'clickThruRate'"
             name="option"
+            title="Page Clickthru Rate"
             @change="customMethod"
           />
-          <p class="select-box__input-text">Click Thru Rate</p>
+          <p class="select-box__input-text">Page Clickthru Rate</p>
         </div>
         <div class="select-box__value">
           <input
             class="select-box__input"
             type="radio"
             id="2"
-            :value="'overallSales'"
+            :value="'sales'"
             name="option"
+            title="Overall Sales"
             @change="customMethod"
           />
           <p class="select-box__input-text">Overall Sales</p>
@@ -44,6 +47,7 @@
             :value="'pageViews'"
             name="option"
             @change="customMethod"
+            title="Page Views"
           />
           <p class="select-box__input-text">Page Views</p>
         </div>
@@ -52,8 +56,9 @@
             class="select-box__input"
             type="radio"
             id="4"
-            :value="'overallOrders'"
+            :value="'orders'"
             name="option"
+            title="Overall Orders"
             @change="customMethod"
           />
           <p class="select-box__input-text">Overall Orders</p>
@@ -67,7 +72,7 @@
       </div>
       <ul class="select-box__list">
         <li>
-          <label class="select-box__option" for="1" aria-hidden="aria-hidden">Click Thru Rate</label>
+          <label class="select-box__option" for="1" aria-hidden="aria-hidden">Page Clickthru Rate</label>
         </li>
         <li>
           <label class="select-box__option" for="2" aria-hidden="aria-hidden">Overall Sales</label>
@@ -84,16 +89,30 @@
 </template>
 
 <script>
+import apiData from "../../data/realData.js";
+import { dataAccessMixins } from "../../mixins/data-access.mixins";
+
 export default {
   name: "categoryDdl",
 
+  mixins: [dataAccessMixins],
+
   data() {
-    return {};
+    return {
+      selectedOptionDetails: [],
+      dataFromJSON: apiData
+    };
   },
 
   methods: {
     customMethod(event) {
-      console.log(event.target.value);
+      this.selectedOptionDetails["graphTitle"] = event.target.value;
+      this.selectedOptionDetails["lineChartTitle"] = event.target.title;
+      this.selectedOptionDetails["dataItems"] = this.extractDataFromJSON(
+        this.dataFromJSON,
+        event.target.value
+      );
+      this.$emit("onCategorySelection", { ...this.selectedOptionDetails });
     }
   },
 
