@@ -99,7 +99,7 @@ export default {
 
   data() {
     return {
-      selectedOptionDetails: [],
+      selectedOptionDetails: {},
       dataFromJSON: apiData
     };
   },
@@ -112,7 +112,9 @@ export default {
         this.dataFromJSON,
         event.target.value
       );
-      this.$emit("onCategorySelection", { ...this.selectedOptionDetails });
+      this.$store.dispatch("updateGraphData", {
+        ...this.selectedOptionDetails
+      });
     }
   },
 

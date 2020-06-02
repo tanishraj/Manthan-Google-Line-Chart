@@ -8,11 +8,15 @@
 export default {
   name: "graph",
 
-  props: { graphData: Object },
+  computed: {
+    checkForGraphDataUpdate() {
+      return this.$store.state.graphData;
+    }
+  },
 
   watch: {
-    graphData: function(newValue, oldvalue) {
-      if (newValue != oldvalue) {
+    checkForGraphDataUpdate(newValue, oldValue) {
+      if (newValue != oldValue) {
         this.realData = newValue;
         google.charts.setOnLoadCallback(this.drawChart);
       }
@@ -21,21 +25,17 @@ export default {
 
   data() {
     return {
-      realData: []
+      realData: null
     };
   },
 
   methods: {
     drawChart() {
-      // Define the chart to be drawn.
       var data = new google.visualization.DataTable();
-
       data.addColumn("string", "Date");
       data.addColumn("number", this.realData.lineChartTitle);
-
       data.addRows(this.realData.dataItems);
 
-      // Set chart options
       var options = {
         title: this.realData.graphTitle,
         hAxis: {
@@ -49,7 +49,6 @@ export default {
         pointsVisible: true
       };
 
-      // Instantiate and draw the chart.
       var chart = new google.visualization.LineChart(
         document.getElementById("container")
       );
